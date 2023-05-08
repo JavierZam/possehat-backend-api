@@ -4,7 +4,7 @@ Clone repository ini dengan perintah berikut:.\
 `git clone https://github.com/JavierZam/apiuser`
 
 Masuk ke dalam direktori repository dengan perintah:.\
-`cd namarepository`
+`cd apiuser`
 
 Jalankan perintah berikut untuk menginstall dependency:.\
 `npm install`
