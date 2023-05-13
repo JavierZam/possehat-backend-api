@@ -36,22 +36,24 @@ your-messaging-sender-id, dan your-app-id dengan nilai yang sesuai dari akun Fir
 Mendaftarkan user baru ke dalam aplikasi. 
 
 Request body: 
-
-{ \
-  "email": "emailuser@contoh.com", \
-  "password": "passworduser", \
-  "phone": "081234567890" \
+```
+{ 
+  "email": "emailuser@contoh.com", 
+  "password": "passworduser", 
+  "phone": "081234567890" 
 } 
-
+```
 Response: 
 
 201 Created jika user berhasil didaftarkan. 
 
-Response body:\
+Response body:
+
 { \
   "message": "User registered",\
   "uid": "uiduser"\
-} \
+} 
+
 400 Bad Request jika terjadi kesalahan pada input data. 
 
 Response body: 
@@ -64,11 +66,12 @@ Response body:
 Melakukan login user ke dalam aplikasi. 
 
 Request body:
-
-{\
-  "email": "emailuser@contoh.com",\
-  "password": "passworduser"\
-}\
+```
+{
+  "email": "emailuser@contoh.com",
+  "password": "passworduser"
+}
+```
 Response:
 
 200 OK jika login berhasil. Response body:
@@ -76,7 +79,8 @@ Response:
 {\
   "uid": "uiduser",\
   "email": "emailuser@contoh.com"\
-}\
+}
+
 500 Internal Server Error jika terjadi kesalahan pada server.
 
 ### GET /user/{uid}
@@ -89,10 +93,12 @@ Response:
 
 200 OK jika data user ditemukan. Response body:
 
-{\
-  "email": "emailuser@contoh.com",\
-  "phone": "081234567890"\
-}\
+```
+{
+  "email": "emailuser@contoh.com",
+  "phone": "081234567890"
+}
+```
 404 Not Found jika user tidak ditemukan.
 
 500 Internal Server Error jika terjadi kesalahan pada server.
@@ -113,14 +119,15 @@ Request parameter:
 
 uid: uid user
 Request body:
-
-{\
-  "email": "emailuserbaru@contoh.com",\
-  "password": "passworduserbaru",\
-  "phone": "081234567891",\
-  "currentEmail": "emailuserlama@contoh.com",\
-  "currentPassword": "passworduserlama"\
-}\
+```
+{
+  "email": "emailuserbaru@contoh.com",
+  "password": "passworduserbaru",
+  "phone": "081234567891",
+  "currentEmail": "emailuserlama@contoh.com",
+  "currentPassword": "passworduserlama"
+}
+```
 Response:
 
 200 OK jika profil berhasil diubah.
