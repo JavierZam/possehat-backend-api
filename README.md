@@ -36,7 +36,7 @@ your-messaging-sender-id, dan your-app-id dengan nilai yang sesuai dari akun Fir
 Mendaftarkan user baru ke dalam aplikasi. 
 
 Request body: 
-```
+```json
 { 
   "email": "emailuser@contoh.com", 
   "password": "passworduser", 
@@ -47,7 +47,8 @@ Response:
 
 201 Created jika user berhasil didaftarkan. 
 
-Response body:
+Response body:\
+json
 
 { \
   "message": "User registered",\
@@ -56,7 +57,8 @@ Response body:
 
 400 Bad Request jika terjadi kesalahan pada input data. 
 
-Response body: 
+Response body: \
+json
 
 { \
   "message": "error message" \
@@ -66,7 +68,7 @@ Response body:
 Melakukan login user ke dalam aplikasi. 
 
 Request body:
-```
+```json
 {
   "email": "emailuser@contoh.com",
   "password": "passworduser"
@@ -94,7 +96,7 @@ Response:
 
 200 OK jika data user ditemukan. Response body:
 
-```
+```json
 {
   "email": "emailuser@contoh.com",
   "phone": "081234567890"
@@ -120,7 +122,7 @@ Request parameter:
 
 uid: uid user
 Request body:
-```
+```json
 {
   "email": "emailuserbaru@contoh.com",
   "password": "passworduserbaru",
