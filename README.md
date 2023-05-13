@@ -74,8 +74,9 @@ Request body:
 ```
 Response:
 
-200 OK jika login berhasil. Response body:
+200 OK jika login berhasil.
 
+Response body:
 {\
   "uid": "uiduser",\
   "email": "emailuser@contoh.com"\
