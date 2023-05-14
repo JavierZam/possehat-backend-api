@@ -1,6 +1,17 @@
 const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } = require('firebase/auth');
 const { doc, setDoc, getDoc, updateDoc } = require('firebase/firestore');
 const { auth, db } = require('../utils/firebase');
+const { sendPasswordResetEmail } = require('firebase/auth');
+
+const resetPassword = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    console.log('Password reset email sent to:', email);
+  } catch (error) {
+    console.log('Error sending password reset email:', error);
+    throw error;
+  }
+};
 
 const registerUser = async (email, password, phone) => {
   try {
@@ -83,8 +94,13 @@ const editProfile = async (uid, email, password, phone, currentEmail, currentPas
     }
   } catch (error) {
     console.log('Error editing profile:', error);
-    throw error;
+    if (error.code === 'auth/email-already-in-use') {
+      // Handle email already in use error
+      throw new Error('The email address is already in use by another account.');
+    } else {
+      throw error;
+    }
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, getUserData, editProfile };
+module.exports = { registerUser, loginUser, logoutUser, getUserData, editProfile, resetPassword };

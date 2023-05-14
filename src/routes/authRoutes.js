@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { registerUser, loginUser, logoutUser, getUserData, editProfile } = require('../controllers/authController');
+const { registerUser, loginUser, logoutUser, getUserData, editProfile, resetPassword } = require('../controllers/authController');
 
 const registerRoute = {
   method: 'POST',
@@ -43,6 +43,28 @@ const loginRoute = {
       payload: Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().min(8).required(),
+      }),
+    },
+  },
+};
+
+const resetPasswordRoute = {
+  method: 'POST',
+  path: '/reset-password',
+  handler: async (request, h) => {
+    const { email } = request.payload;
+    try {
+      await resetPassword(email);
+      return h.response({ message: 'Password reset email sent' }).code(200);
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      return h.response({ message: 'Error resetting password' }).code(500);
+    }
+  },
+  options: {
+    validate: {
+      payload: Joi.object({
+        email: Joi.string().email().required(),
       }),
     },
   },
@@ -116,4 +138,4 @@ const editProfileRoute = {
   },
 };
 
-module.exports = [registerRoute, loginRoute, userInfoRoute, logoutRoute, editProfileRoute];
+module.exports = [registerRoute, loginRoute, userInfoRoute, logoutRoute, editProfileRoute, resetPasswordRoute];
