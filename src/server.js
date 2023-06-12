@@ -3,7 +3,7 @@ const cors = require('cors');
 const firebase = require('firebase');
 const Joi = require('joi');
 require('firebase/firestore');
-const firebaseConfig = require('./firebaseConfig');
+const firebaseConfig = require('../firebaseConfig');
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
