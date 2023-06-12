@@ -92,7 +92,7 @@ Success (200):
     "umur": 30,
     "alamat": "Jl. Contoh Alamat",
     "berat": 70.5,
-    "tensi": "Normal"
+    "tensi": "120/80"
   },
   "message": "Data pasien berhasil ditemukan",
   "code_respon": 200
@@ -124,7 +124,7 @@ Request Body:
   "umur": 30,
   "alamat": "Jl. Contoh Alamat",
   "berat": 70.5,
-  "tensi": "Normal"
+  "tensi": "120/80"
 }
 ```
 Response:
@@ -137,7 +137,7 @@ Success (200):
     "umur": 30,
     "alamat": "Jl. Contoh Alamat",
     "berat": 70.5,
-    "tensi": "Normal"
+    "tensi": "120/80"
   },
   "message": "Pasien berhasil ditambahkan",
   "code_respon": 200
