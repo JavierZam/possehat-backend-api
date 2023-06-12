@@ -1,0 +1,7 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/pos-sehat/apipatient', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/pos-sehat/apipatient']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'apipatient', '--image', 'gcr.io/pos-sehat/apipatient', '--platform', 'managed', '--region', 'asia-southeast2', '--allow-unauthenticated']
