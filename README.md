@@ -53,7 +53,7 @@ Success (200):
       "umur": 30,
       "alamat": "Jl. Contoh Alamat",
       "berat": 70.5,
-      "tensi": "Normal"
+      "tensi": "120/80"
     },
     {
       "id": "def456",
@@ -61,7 +61,7 @@ Success (200):
       "umur": 25,
       "alamat": "Jl. Contoh Alamat Lain",
       "berat": 65.2,
-      "tensi": "Rendah"
+      "tensi": "120/80"
     }
   ],
   "message": "Data pasien berhasil diambil",
