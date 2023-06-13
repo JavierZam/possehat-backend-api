@@ -1,5 +1,5 @@
 const { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } = require('firebase/auth');
-const { doc, setDoc, getDoc, updateDoc } = require('firebase/firestore');
+const { doc, setDoc, getDoc, updateDoc, collection, addDoc } = require('firebase/firestore');
 const { auth, db } = require('../utils/firebase');
 const { sendPasswordResetEmail } = require('firebase/auth');
 
@@ -13,15 +13,15 @@ const resetPassword = async (email) => {
   }
 };
 
-const registerUser = async (email, password, phone) => {
+const registerUser = async (email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     const userDoc = doc(db, 'users', user.uid);
     await setDoc(userDoc, {
       email,
-      phone,
     });
+
     return user;
   } catch (error) {
     console.log('Error registering user:', error);
@@ -38,7 +38,8 @@ const loginUser = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    return user;
+    const token = await user.getIdToken();
+    return { uid: user.uid, email: user.email, token };
   } catch (error) {
     console.log('Error logging in user:', error);
     throw error;
@@ -68,7 +69,7 @@ const getUserData = async (uid) => {
   }
 };
 
-const editProfile = async (uid, email, password, phone, currentEmail, currentPassword) => {
+const editProfile = async (uid, email, password, currentEmail, currentPassword) => {
   try {
     // Sign in the user to get the user object
     const { user } = await signInWithEmailAndPassword(auth, currentEmail, currentPassword);
@@ -78,7 +79,6 @@ const editProfile = async (uid, email, password, phone, currentEmail, currentPas
       // Update user data in Firestore
       const userDoc = doc(db, 'users', uid);
       const updateData = {};
-      if (phone) updateData.phone = phone;
       if (email) updateData.email = email;
 
       await updateDoc(userDoc, updateData);

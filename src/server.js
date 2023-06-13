@@ -3,7 +3,7 @@ const authRoutes = require('./routes/authRoutes');
 
 const init = async () => {
   const server = Hapi.server({
-    port: 8080,
+    port: process.env.PORT || 4000,
     host: '0.0.0.0',
   });
 

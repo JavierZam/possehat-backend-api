@@ -5,13 +5,21 @@ const registerRoute = {
   method: 'POST',
   path: '/register',
   handler: async (request, h) => {
-    const { email, password, phone } = request.payload;
+    const { email, password } = request.payload;
     try {
-      const user = await registerUser(email, password, phone);
-      return h.response({ message: 'User registered', uid: user.uid }).code(201);
+      const uid = await registerUser(email, password);
+      return h.response({
+        data: { message: 'User registered', uid },
+        message: '',
+        code_respon: 200,
+      });
     } catch (error) {
       console.error('Error registering user:', error);
-      return h.response({ message: error.message }).code(400);
+      return h.response({
+        data: {},
+        message: error.message,
+        code_respon: 400,
+      });
     }
   },
   options: {
@@ -19,7 +27,6 @@ const registerRoute = {
       payload: Joi.object({
         email: Joi.string().email().required(),
         password: Joi.string().min(8).required(),
-        phone: Joi.string().required(),
       }),
     },
   },
@@ -31,11 +38,19 @@ const loginRoute = {
   handler: async (request, h) => {
     const { email, password } = request.payload;
     try {
-      const user = await loginUser(email, password);
-      return h.response({ uid: user.uid, email: user.email }).code(200);
+      const { uid, email: userEmail, token: userToken } = await loginUser(email, password);
+      return h.response({
+        data: { uid, email: userEmail, token: userToken },
+        message: '',
+        code_respon: 200,
+      });
     } catch (error) {
       console.error('Error logging in user:', error);
-      return h.response('Error logging in user').code(500);
+      return h.response({
+        data: {},
+        message: 'Error logging in user',
+        code_respon: 500,
+      });
     }
   },
   options: {
@@ -55,10 +70,18 @@ const resetPasswordRoute = {
     const { email } = request.payload;
     try {
       await resetPassword(email);
-      return h.response({ message: 'Password reset email sent' }).code(200);
+      return h.response({
+        data: {},
+        message: 'Password reset email sent',
+        code_respon: 200,
+      });
     } catch (error) {
       console.error('Error resetting password:', error);
-      return h.response({ message: 'Error resetting password' }).code(500);
+      return h.response({
+        data: {},
+        message: error.message,
+        code_respon: 400,
+      });
     }
   },
   options: {
@@ -78,13 +101,25 @@ const userInfoRoute = {
     try {
       const data = await getUserData(uid);
       if (data) {
-        return h.response({ email: data.email, phone: data.phone }).code(200);
+        return h.response({
+          data: { email: data.email, phone: data.phone },
+          message: '',
+          code_respon: 200,
+        });
       } else {
-        return h.response('No user data found').code(404);
+        return h.response({
+          data: {},
+          message: 'No user data found',
+          code_respon: 404,
+        });
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
-      return h.response('Error fetching user data').code(500);
+      return h.response({
+        data: {},
+        message: 'Error fetching user data',
+        code_respon: 500,
+      });
     }
   },
 };
@@ -95,10 +130,18 @@ const logoutRoute = {
   handler: async (request, h) => {
     try {
       await logoutUser();
-      return h.response({ message: 'User logged out successfully' }).code(200);
+      return h.response({
+        data: {},
+        message: 'User logged out successfully',
+        code_respon: 200,
+      });
     } catch (error) {
       console.error('Error logging out user:', error);
-      return h.response({ message: 'Error logging out user' }).code(400);
+      return h.response({
+        data: {},
+        message: 'Error logging out user',
+        code_respon: 400,
+      });
     }
   },
 };
@@ -111,7 +154,6 @@ const editProfileRoute = {
       payload: Joi.object({
         email: Joi.string().email().optional(),
         password: Joi.string().min(8).optional(),
-        phone: Joi.string().optional(),
         currentEmail: Joi.string().email().required(),
         currentPassword: Joi.string().min(8).required(),
       }),
@@ -122,18 +164,30 @@ const editProfileRoute = {
   },
   handler: async (request, h) => {
     const { uid } = request.params;
-    const { email, password, phone, currentEmail, currentPassword } = request.payload;
+    const { email, password, currentEmail, currentPassword } = request.payload;
 
     try {
-      const result = await editProfile(uid, email, password, phone, currentEmail, currentPassword);
+      const result = await editProfile(uid, email, password, currentEmail, currentPassword);
       if (result) {
-        return h.response({ message: 'Profile updated successfully' }).code(200);
+        return h.response({
+          data: {},
+          message: 'Profile updated successfully',
+          code_respon: 200,
+        });
       } else {
-        return h.response({ message: 'User not authorized to edit this profile' }).code(403);
+        return h.response({
+          data: {},
+          message: 'User not authorized to edit this profile',
+          code_respon: 403,
+        });
       }
     } catch (error) {
       console.error('Error updating profile:', error);
-      return h.response({ message: 'Error updating profile' }).code(500);
+      return h.response({
+        data: {},
+        message: 'Error updating profile',
+        code_respon: 500,
+      });
     }
   },
 };
