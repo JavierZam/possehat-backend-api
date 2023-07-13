@@ -184,13 +184,13 @@ Response:
 Melakukan logout user dari aplikasi.
 
 Response:
-
+```json
 {
 "data": {},
 "message": "User logged out successfully",
 "code_respon": 200
 }
-
+```
 ### PUT /edit-profile/{uid}
 
 Mengubah informasi profil user berdasarkan uid.
